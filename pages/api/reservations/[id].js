@@ -1,6 +1,6 @@
 import nc from 'next-connect';
 
-import { withAuthRequest } from '@/lib/withAuthRequest';
+import { withAuthFetch } from '@/lib/withAuthFetch';
 
 const handler = nc({ attachParams: true });
 
@@ -10,9 +10,7 @@ handler.patch(async (req, res) => {
     body,
   } = req;
 
-  console.log('==> body', body);
-
-  const { results } = await withAuthRequest(`/api/reservations/${id}`, {
+  const results = await withAuthFetch(`/api/reservations/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(body),
   });

@@ -13,7 +13,7 @@ import {
 
 import { defaults } from 'lodash';
 
-import { withAuthRequest } from '@/lib/withAuthRequest';
+import { withAuthFetch } from '@/lib/withAuthFetch';
 import { useState } from 'react';
 
 export default function ReservationPage({
@@ -135,7 +135,7 @@ export async function getServerSideProps(context) {
     params: { id },
   } = context;
 
-  const { results } = await withAuthRequest(`/api/reservations/${id}`, {
+  const results = await withAuthFetch(`/api/reservations/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
