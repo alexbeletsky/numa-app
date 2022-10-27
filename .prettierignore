@@ -1,0 +1,5 @@
+.vscode
+.next
+package.json
+package-lock.json
+next.config.js
