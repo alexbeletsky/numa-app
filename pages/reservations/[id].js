@@ -11,14 +11,17 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { API_BASE_URL, withAuthRequest } from '/lib/withAuthRequest';
+import { withAuthRequest } from '@/lib/withAuthRequest';
 
-export default function SignupCard() {
+export default function ReservationPage({
+  reservation: { id, billingAddress },
+  accessToken,
+}) {
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'}>
       <Stack spacing={6} mx={'auto'} minW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'2xl'}>Reservation #</Heading>
+          <Heading fontSize={'2xl'}>Reservation #{id}</Heading>
         </Stack>
         <Box
           rounded={'lg'}
@@ -70,24 +73,23 @@ export async function getServerSideProps(context) {
     params: { id },
   } = context;
 
-  const fetchReservation = (fetchAuth) => {
-    return fetchAuth(`/api/reservations/${id}`, {
+  const { results, accessToken } = await withAuthRequest(
+    `/api/reservations/${id}`,
+    {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-    });
-  };
-
-  const { results, accessToken } = await withAuthRequest(fetchReservation);
+    },
+  );
 
   if (results.status === 404) {
     return { notFound: true };
   }
 
-  const reservation = await results.json();
+  const { data } = await results.json();
 
   return {
-    props: { reservation, accessToken },
+    props: { reservation: data, accessToken },
   };
 }

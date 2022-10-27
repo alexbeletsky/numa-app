@@ -7,7 +7,8 @@
       "@/styles/*": ["styles/*"],
       "@/config/*": ["config/*"],
       "@/middlewares/*": ["middlewares/*"],
-      "@/hooks/*": ["hooks/*"]
+      "@/hooks/*": ["hooks/*"],
+      "@/lib/*": ["lib/*"]
     }
   }
 }
